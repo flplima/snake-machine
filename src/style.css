@@ -1,0 +1,12 @@
+body {
+  background-color: #111;
+  color: #ddd;
+  overflow-y: scroll;
+}
+
+canvas {
+  margin: auto;
+  display: block;
+  margin-top: 32px;
+  border-radius: 12px;
+}

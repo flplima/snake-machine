@@ -1,0 +1,29 @@
+{
+  "name": "snake-machine",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flplima/snake-machine"
+  },
+  "author": "Felipe Lima <https://github.com/flplima>",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.1",
+    "typescript": "^4.3.2",
+    "vite": "^2.4.4",
+    "vite-tsconfig-paths": "^3.3.13"
+  },
+  "dependencies": {
+    "xstate": "^4.23.1"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
+  }
+}
