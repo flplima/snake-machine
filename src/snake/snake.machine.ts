@@ -1,6 +1,6 @@
 import { createMachine } from 'xstate'
-import { SnakeContext, SnakeEvent } from './snakeTypes'
-import * as snakeActions from './snakeActions'
+import { SnakeContext, SnakeEvent } from 'src/types'
+import * as snakeActions from './snake.actions'
 
 const snakeMachine = createMachine<SnakeContext, SnakeEvent>(
   {

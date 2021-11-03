@@ -1,5 +1,5 @@
 import { createMachine } from 'xstate'
-import { BonusContext } from './bonusTypes'
+import { BonusContext } from 'src/types'
 
 const bonusMachine = createMachine<BonusContext>({
   id: 'bonus',

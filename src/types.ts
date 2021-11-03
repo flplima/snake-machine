@@ -1,3 +1,16 @@
+import { Interpreter } from 'xstate'
+
+export interface GameContext {
+  snake: Interpreter<SnakeContext> | null
+  food: Interpreter<FoodContext> | null
+  bonus: Interpreter<BonusContext> | null
+  keystrokes: Array<'up' | 'down' | 'left' | 'right'>
+  countdownToBonus: number
+  countdownToRemoveBonus: number
+  speed: number
+  score: number
+}
+
 export interface SnakePosition {
   x: number
   y: number
@@ -31,3 +44,14 @@ export type SnakeEvent =
   | EatFoodEvent
   | EatBonusEvent
   | CrashEvent
+
+export interface FoodContext {
+  x: number
+  y: number
+}
+
+export interface BonusContext {
+  x: number
+  y: number
+  spriteIndex: number
+}

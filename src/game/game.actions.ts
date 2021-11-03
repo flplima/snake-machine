@@ -1,15 +1,15 @@
 import { assign, spawn, send } from 'xstate'
 
-import snakeMachine from 'src/snake/snakeMachine'
-import foodMachine from 'src/food/foodMachine'
-import bonusMachine from 'src/bonus/bonusMachine'
-import DrawGame from 'src/utils/drawGame'
+import snakeMachine from 'src/snake/snake.machine'
+import foodMachine from 'src/food/food.machine'
+import bonusMachine from 'src/bonus/bonus.machine'
 
 import {
   getNextSnakePosition,
   getInitialContextForFood,
   getInitialContextForBonus,
-} from './gameSelectors'
+} from './game.selectors'
+import Renderer from 'src/renderer'
 
 export const spawnSnake = assign({
   snake: () => spawn(snakeMachine),
@@ -93,7 +93,7 @@ export const updateScoreWithBonus = assign({
 })
 
 export const drawGame = (context) => {
-  new DrawGame({
+  new Renderer({
     snake: context.snake.getSnapshot().context,
     food: context.food.getSnapshot().context,
     bonus: context.bonus?.getSnapshot().context,
@@ -103,7 +103,7 @@ export const drawGame = (context) => {
 }
 
 export const drawGameWithoutSnake = (context) => {
-  new DrawGame({
+  new Renderer({
     snake: null,
     food: context.food.getSnapshot().context,
     bonus: context.bonus?.getSnapshot().context,

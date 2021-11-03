@@ -1,5 +1,5 @@
 import { assign } from 'xstate'
-import { SnakeContext, UpdatePositionEvent } from './snakeTypes'
+import { SnakeContext, UpdatePositionEvent } from 'src/types'
 
 export const appendBody = assign<SnakeContext, UpdatePositionEvent>({
   body: (context, event) => [event.position, ...context.body],

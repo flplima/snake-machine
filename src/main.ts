@@ -1,6 +1,6 @@
 import { interpret } from 'xstate'
 
-import gameMachine from 'src/game/gameMachine'
+import gameMachine from 'src/game/game.machine'
 
 const game = interpret(gameMachine)
 

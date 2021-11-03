@@ -1,8 +1,8 @@
 import { createMachine } from 'xstate'
 
-import { GameContext } from './gameTypes'
-import * as gameGuards from './gameGuards'
-import * as gameActions from './gameActions'
+import { GameContext } from 'src/types'
+import * as gameGuards from './game.guards'
+import * as gameActions from './game.actions'
 
 const gameMachine = createMachine<GameContext>(
   {
@@ -15,7 +15,7 @@ const gameMachine = createMachine<GameContext>(
       keystrokes: [],
       countdownToBonus: 5,
       countdownToRemoveBonus: 20,
-      speed: 9,
+      speed: 8,
       score: 0,
     },
     states: {

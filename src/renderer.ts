@@ -1,5 +1,5 @@
 import * as drawingMaps from 'src/drawingMaps'
-import { SnakeContext } from 'src/snake/snakeTypes'
+import { SnakeContext } from 'src/types'
 import {
   SCALE_FACTOR,
   GAME_HEIGHT,
@@ -18,7 +18,7 @@ interface Props {
   countdownToRemoveBonus: number
 }
 
-export default class DrawGame {
+export default class Renderer {
   canvas: HTMLCanvasElement
   context: CanvasRenderingContext2D
 
@@ -40,9 +40,9 @@ export default class DrawGame {
 
     this.renderHeader()
     this.renderSquare()
-    this.drawSnake()
-    this.drawFood()
-    this.drawBonus()
+    this.renderSnake()
+    this.renderFood()
+    this.renderBonus()
   }
 
   renderHeader() {
@@ -52,7 +52,7 @@ export default class DrawGame {
       SCALE_FACTOR * SCREEN_PADDING,
       SCALE_FACTOR * (SCREEN_PADDING + 7),
       GAME_WIDTH * GRID_ITEM_SIZE * SCALE_FACTOR +
-        (GRID_ITEM_SIZE + 4) * SCALE_FACTOR,
+      (GRID_ITEM_SIZE + 4) * SCALE_FACTOR,
       SCALE_FACTOR
     )
   }
@@ -63,7 +63,7 @@ export default class DrawGame {
       SCALE_FACTOR * SCREEN_PADDING,
       SCALE_FACTOR * (SCREEN_PADDING + 12),
       GAME_WIDTH * GRID_ITEM_SIZE * SCALE_FACTOR +
-        (GRID_ITEM_SIZE + 4) * SCALE_FACTOR,
+      (GRID_ITEM_SIZE + 4) * SCALE_FACTOR,
       SCALE_FACTOR
     )
     // bottom
@@ -71,7 +71,7 @@ export default class DrawGame {
       SCALE_FACTOR * SCREEN_PADDING,
       SCALE_FACTOR * (SCREEN_PADDING + 19 + GAME_HEIGHT * GRID_ITEM_SIZE),
       GAME_WIDTH * GRID_ITEM_SIZE * SCALE_FACTOR +
-        (GRID_ITEM_SIZE + 4) * SCALE_FACTOR,
+      (GRID_ITEM_SIZE + 4) * SCALE_FACTOR,
       SCALE_FACTOR
     )
     // left
@@ -80,7 +80,7 @@ export default class DrawGame {
       SCALE_FACTOR * (SCREEN_PADDING + 12),
       SCALE_FACTOR,
       GAME_HEIGHT * GRID_ITEM_SIZE * SCALE_FACTOR +
-        (GRID_ITEM_SIZE + 4) * SCALE_FACTOR
+      (GRID_ITEM_SIZE + 4) * SCALE_FACTOR
     )
     // right
     this.context.fillRect(
@@ -88,11 +88,11 @@ export default class DrawGame {
       SCALE_FACTOR * (SCREEN_PADDING + 12),
       SCALE_FACTOR,
       GAME_HEIGHT * GRID_ITEM_SIZE * SCALE_FACTOR +
-        (GRID_ITEM_SIZE + 4) * SCALE_FACTOR
+      (GRID_ITEM_SIZE + 4) * SCALE_FACTOR
     )
   }
 
-  drawSnake() {
+  renderSnake() {
     this.props.snake?.body.forEach((snakePart, index, arr) => {
       const isHead = index === 0
       const isTail = index === arr.length - 1
@@ -132,13 +132,13 @@ export default class DrawGame {
             snakePart.x === bonus?.x + 1 &&
             snakePart.y - 1 === bonus?.y)
         if (shouldOpenMouth) {
-          this.drawMap(
+          this.renderMap(
             drawingMaps.snake.headWithMouthOpen[snakePart.direction],
             snakePart.x,
             snakePart.y
           )
         } else {
-          this.drawMap(
+          this.renderMap(
             drawingMaps.snake.head[snakePart.direction],
             snakePart.x,
             snakePart.y
@@ -146,7 +146,7 @@ export default class DrawGame {
         }
       } else if (isTail) {
         const lastDirection = arr[arr.length - 2].direction
-        this.drawMap(
+        this.renderMap(
           drawingMaps.snake.tail[lastDirection],
           snakePart.x,
           snakePart.y
@@ -161,7 +161,7 @@ export default class DrawGame {
             (snakePart.direction === 'right' &&
               previousPartDirection === 'down')
           ) {
-            this.drawMap(
+            this.renderMap(
               drawingMaps.snake[
                 withFood ? 'bodyTurningWithFood' : 'bodyTurning'
               ].upLeft,
@@ -173,7 +173,7 @@ export default class DrawGame {
               previousPartDirection === 'right') ||
             (snakePart.direction === 'left' && previousPartDirection === 'down')
           ) {
-            this.drawMap(
+            this.renderMap(
               drawingMaps.snake[
                 withFood ? 'bodyTurningWithFood' : 'bodyTurning'
               ].upRight,
@@ -185,7 +185,7 @@ export default class DrawGame {
               previousPartDirection === 'left') ||
             (snakePart.direction === 'right' && previousPartDirection === 'up')
           ) {
-            this.drawMap(
+            this.renderMap(
               drawingMaps.snake[
                 withFood ? 'bodyTurningWithFood' : 'bodyTurning'
               ].downLeft,
@@ -197,7 +197,7 @@ export default class DrawGame {
               previousPartDirection === 'right') ||
             (snakePart.direction === 'left' && previousPartDirection === 'up')
           ) {
-            this.drawMap(
+            this.renderMap(
               drawingMaps.snake[
                 withFood ? 'bodyTurningWithFood' : 'bodyTurning'
               ].downRight,
@@ -206,9 +206,9 @@ export default class DrawGame {
             )
           }
         } else {
-          this.drawMap(
+          this.renderMap(
             drawingMaps.snake[withFood ? 'bodyWithFood' : 'body'][
-              snakePart.direction
+            snakePart.direction
             ],
             snakePart.x,
             snakePart.y
@@ -218,15 +218,15 @@ export default class DrawGame {
     })
   }
 
-  drawFood() {
+  renderFood() {
     const { food } = this.props
-    this.drawMap(drawingMaps.food, food.x, food.y)
+    this.renderMap(drawingMaps.food, food.x, food.y)
   }
 
-  drawBonus() {
+  renderBonus() {
     const { bonus } = this.props
     if (bonus) {
-      this.drawMap(drawingMaps.bonus[bonus.spriteIndex], bonus.x, bonus.y)
+      this.renderMap(drawingMaps.bonus[bonus.spriteIndex], bonus.x, bonus.y)
     }
   }
 
@@ -256,7 +256,7 @@ export default class DrawGame {
           if (letter !== ' ') {
             this.context.fillRect(
               (GAME_WIDTH * GRID_ITEM_SIZE - 4) * SCALE_FACTOR +
-                x * SCALE_FACTOR,
+              x * SCALE_FACTOR,
               SCREEN_PADDING * SCALE_FACTOR + 2 + y * SCALE_FACTOR,
               SCALE_FACTOR,
               SCALE_FACTOR
@@ -273,8 +273,8 @@ export default class DrawGame {
             if (letter !== ' ') {
               this.context.fillRect(
                 (GAME_WIDTH * GRID_ITEM_SIZE + SCREEN_PADDING + index * 4) *
-                  SCALE_FACTOR +
-                  x * SCALE_FACTOR,
+                SCALE_FACTOR +
+                x * SCALE_FACTOR,
                 SCREEN_PADDING * SCALE_FACTOR + y * SCALE_FACTOR,
                 SCALE_FACTOR,
                 SCALE_FACTOR
@@ -286,7 +286,7 @@ export default class DrawGame {
     }
   }
 
-  drawMap(drawingMap, positionX, positionY) {
+  renderMap(drawingMap, positionX, positionY) {
     const gameFieldX = (SCREEN_PADDING + 2) * SCALE_FACTOR
     const gameFieldY = (SCREEN_PADDING + 14) * SCALE_FACTOR
     drawingMap.forEach((line, y) => {
@@ -294,11 +294,11 @@ export default class DrawGame {
         if (letter !== ' ') {
           this.context.fillRect(
             gameFieldX +
-              positionX * SCALE_FACTOR * GRID_ITEM_SIZE +
-              x * SCALE_FACTOR,
+            positionX * SCALE_FACTOR * GRID_ITEM_SIZE +
+            x * SCALE_FACTOR,
             gameFieldY +
-              positionY * SCALE_FACTOR * GRID_ITEM_SIZE +
-              y * SCALE_FACTOR,
+            positionY * SCALE_FACTOR * GRID_ITEM_SIZE +
+            y * SCALE_FACTOR,
             SCALE_FACTOR,
             SCALE_FACTOR
           )

@@ -1,4 +1,4 @@
-import { getNextSnakePosition, getSnakeHead } from './gameSelectors'
+import { getNextSnakePosition, getSnakeHead } from './game.selectors'
 
 export const isValidKey = (context, event) => {
   const lastKeystroke = context.keystrokes[context.keystrokes.length - 1]

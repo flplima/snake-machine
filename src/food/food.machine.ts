@@ -1,5 +1,5 @@
 import { createMachine } from 'xstate'
-import { FoodContext } from './foodTypes'
+import { FoodContext } from 'src/types'
 
 const foodMachine = createMachine<FoodContext>({
   id: 'food',

@@ -1,6 +1,6 @@
 import { GAME_HEIGHT, GAME_WIDTH } from 'src/constants'
 import * as drawingMaps from 'src/drawingMaps'
-import { GameContext } from './gameTypes'
+import { GameContext } from 'src/types'
 
 export const getInitialContextForFood = (context: GameContext) => {
   let isEmpty, x, y
@@ -31,7 +31,7 @@ export const getInitialContextForBonus = (context: GameContext) => {
   const foodContext = context.food.getSnapshot().context
   const snakeContext = context.snake.getSnapshot().context
   do {
-    x = Math.floor(Math.random() * (GAME_WIDTH + 1))
+    x = Math.floor(Math.random() * (GAME_WIDTH))
     y = Math.floor(Math.random() * (GAME_HEIGHT + 1))
 
     if (
