@@ -9,6 +9,7 @@ import {
   getInitialContextForFood,
   getInitialContextForBonus,
 } from './game.selectors'
+
 import Renderer from 'src/renderer'
 
 export const spawnSnake = assign({
@@ -89,7 +90,7 @@ export const updateScoreWithFood = assign({
 })
 
 export const updateScoreWithBonus = assign({
-  score: (context) => context.score + context.countdownToRemoveBonus,
+  score: (context) => context.score + 5 * (context.speed + 9) - 2 * (20 - context.countdownToRemoveBonus),
 })
 
 export const drawGame = (context) => {
